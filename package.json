@@ -5,8 +5,8 @@
   "scripts": {
     "build": "./build.sh",
     "dev": "nodemon --watch",
-    "serve": "http-server -c-1 ./build",
-    "tailwind": "tailwindcss -i ./input.css -o ./build/output.css"
+    "serve": "http-server -c-1 ./docs",
+    "tailwind": "tailwindcss -i ./input.css -o ./docs/output.css"
   },
   "devDependencies": {
     "browser-sync": "^3.0.2",

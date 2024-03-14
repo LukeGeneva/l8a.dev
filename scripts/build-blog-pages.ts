@@ -10,6 +10,6 @@ for (let fp of filepaths) {
   const content = await marked.parse(markdown);
   const html = template.replace('{{content}}', content);
   const htmlFilename = path.basename(fp).replace('.md', '.html');
-  fs.writeFileSync(`./build/${htmlFilename}`, html);
+  fs.writeFileSync(`./docs/${htmlFilename}`, html);
   console.log(`Built ${htmlFilename}`);
 }

@@ -1,8 +1,8 @@
-echo "Cleaning build directory...";
-rm -rf build/*;
+echo "Cleaning docs directory...";
+rm -rf docs/*;
 
 echo "Copying public files...";
-cp -R ./public/* ./build;
+cp -R ./public/* ./docs;
 
 echo "Building blog pages...";
 bun scripts/build-blog-pages.ts ./blog/*.md;
