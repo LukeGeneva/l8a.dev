@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.auto-margin {
+    @apply mx-auto p-4 md:w-3/4 lg:w-1/2;
+}
+
+.blog-page h1 {
+    @apply text-4xl font-bold py-2;
+}
+
+.blog-page h2 {
+    @apply text-2xl font-bold py-2;
+}
+
+.blog-page a {
+    @apply text-blue-500;
+}
+
+.blog-page p:first-of-type {
+    @apply text-gray-500 text-sm;
+}
+
+.blog-page p {
+    @apply mb-6;
+}
+
+.blog-page p code {
+    @apply text-orange-600;
+}
+
+.blog-page li code {
+    @apply text-orange-600;
+}
+
+.blog-page pre {
+    @apply pb-4;
+}
+
+.blog-page ol {
+    @apply list-decimal;
+}
+
+.post-list > li {
+    @apply flex flex-col;
+}
+
+.post-list > li > span {
+    @apply text-sm text-gray-700;
+}
+
+.post-list > li > a {
+    @apply text-lg text-blue-500;
+}

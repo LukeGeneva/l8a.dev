@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-LXT6DETMYL"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+
+      gtag('config', 'G-LXT6DETMYL');
+    </script>
+    <title>lukegeneva.dev</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="/output.css" rel="stylesheet" />
+    <link href="/highlight.css" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="auto-margin">
+      <a href="/"><h1 class="text-2xl font-bold">lukegeneva.dev</h1></a>
+      <p class="text-sm text-gray-500">
+        A place for programming-related ideas and writings.
+      </p>
+    </header>
+    <hr />
+    <main class="blog-page auto-margin"><h1>How This Site is Made</h1>
+<p>Mar 16, 2024</p>
+<p>I provide this page here in case you are wondering how this site is made. It&#39;s
+fairly simple, but requires some explanation.</p>
+<p>I&#39;m a web developer by trade, but I think much of the industry has fallen victim
+to overkill, over-engineering, and bloat. I don&#39;t want to learn another
+framework. I don&#39;t want to figure out another templating system. I don&#39;t want to
+fiddle around with a static site generator. Don&#39;t get me wrong, some of the
+stuff out there is great, but at the end of the day, this site just has to
+display requested content and allow me to update it quickly and regularly.</p>
+<p>Currently, all content on this site is static. The blog articles are written in
+markdown. The pages are written in plain HTML. I use Tailwind for styling
+because it&#39;s just that easy. There&#39;s a small build script that produces the
+functioning site, which currently is hosted by <a href="https://pages.github.com/">GitHub
+Pages</a>.</p>
+<h2>Blog Posts</h2>
+<p>Posts are written in markdown and converted to HTML with
+<a href="https://www.npmjs.com/package/marked">marked</a>. The conversion is part of the
+build process and the rendered HTML files get placed in <code>docs/blog</code>.</p>
+<p>I use a simple <a href="https://github.com/LukeGeneva/lukegeneva.dev/blob/master/blog-page.template.html">template
+page</a>
+where each blog post is fed into. What&#39;s nice about this is that, by wrapping
+the template page in a <code>blog-page</code> CSS class, I can easily target the rendered
+blog post HTML for styling like so:</p>
+<pre><code class="hljs language-css"><span class="hljs-selector-class">.blog-page</span> <span class="hljs-selector-tag">h1</span> {
+    <span class="hljs-keyword">@apply</span> text-<span class="hljs-number">4</span>xl font-bold py-<span class="hljs-number">2</span>;
+}
+
+<span class="hljs-selector-class">.blog-page</span> <span class="hljs-selector-tag">h2</span> {
+    <span class="hljs-keyword">@apply</span> text-<span class="hljs-number">2</span>xl font-bold py-<span class="hljs-number">2</span>;
+}
+
+<span class="hljs-selector-class">.blog-page</span> <span class="hljs-selector-tag">a</span> {
+    <span class="hljs-keyword">@apply</span> text-blue-<span class="hljs-number">500</span>;
+}
+</code></pre><h2>Build Script</h2>
+<p>The build script is very simple. This is it in its entirety:</p>
+<pre><code class="hljs language-sh"><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Cleaning docs directory...&quot;</span>;
+<span class="hljs-built_in">rm</span> -rf docs/*;
+
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Copying public files...&quot;</span>;
+<span class="hljs-built_in">cp</span> -R ./public/* ./docs;
+
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Building blog pages...&quot;</span>;
+bun scripts/build-blog-pages.ts ./blog/*.md;
+
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Generating Tailwind styles...&quot;</span>;
+bun run tailwind;
+
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Copying code highlight styles...&quot;</span>;
+<span class="hljs-built_in">cp</span> ./node_modules/highlight.js/styles/default.css ./docs/highlight.css;
+
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Done!&quot;</span>;
+</code></pre><p>It is basically five steps:</p>
+<ol>
+<li>Clean the <code>docs</code> directory in preparation for file changes.</li>
+<li>Copy public files.</li>
+<li>Run a small script that runs all blog posts through <code>marked</code> and puts the
+resulting HTML in the <code>docs</code> directory.</li>
+<li>Run Tailwind.</li>
+<li>Copy <code>highlight.js</code> styles into <code>docs</code>. This is a nice package for displaying
+syntax-highlighted code blocks.</li>
+</ol>
+</main>
+    <footer class="flex gap-4 justify-center py-4">
+      <a
+        class="flex gap-1 items-center"
+        href="https://github.com/LukeGeneva"
+        target="_blank"
+        ><img width="30" height="30" src="/images/github.png" />LukeGeneva</a
+      >
+      <a
+        class="flex gap-1 items-center"
+        href="https://twitter.com/GenevaLuke"
+        target="_blank"
+        ><img width="30" height="30" src="/images/x.png" />@GenevaLuke</a
+      >
+    </footer>
+  </body>
+</html>
