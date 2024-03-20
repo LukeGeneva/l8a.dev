@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    @apply overflow-y-scroll;
+}
+
 .auto-margin {
     @apply mx-auto p-4 md:w-3/4 lg:w-1/2;
 }
