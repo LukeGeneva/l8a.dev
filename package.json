@@ -1,10 +1,10 @@
 {
   "name": "lukegeneva.dev",
   "scripts": {
-    "build": "node build-blog-pages.js",
+    "build": "npm run tailwind && node build-blog-pages.js",
     "dev": "nodemon",
     "serve": "http-server -c-1 ./docs",
-    "tailwind": "tailwindcss -i ./public/input.css -o ./docs/output.css"
+    "tailwind": "tailwindcss -i ./input.css -o ./docs/output.css"
   },
   "devDependencies": {
     "highlight.js": "^11.9.0",
