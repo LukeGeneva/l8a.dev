@@ -1,6 +1,6 @@
 {
-  "watch": ["public/"],
+  "watch": ["blog/"],
   "ignore": ["docs"],
-  "exec": "bun run build && bun run serve",
-  "ext": "js,html,css,md"
+  "exec": "npm run build && npm run serve",
+  "ext": "md"
 }

@@ -14,8 +14,8 @@ display requested content and allow me to update it quickly and regularly.
 
 Currently, all content on this site is static. The blog articles are written in
 markdown. The pages are written in plain HTML. I use Tailwind for styling
-because it's just that easy. There's a small build script that produces the
-functioning site, which currently is hosted by [GitHub
+because it's just that easy. There's a small script that generates the blog HTML
+from markdown files, and the site is currently hosted by [GitHub
 Pages](https://pages.github.com/).
 
 ## Blog Posts
@@ -32,47 +32,14 @@ blog post HTML for styling like so:
 
 ```css
 .blog-page h1 {
-    @apply text-4xl font-bold py-2;
+  @apply text-4xl font-bold py-2;
 }
 
 .blog-page h2 {
-    @apply text-2xl font-bold py-2;
+  @apply text-2xl font-bold py-2;
 }
 
 .blog-page a {
-    @apply text-blue-500;
+  @apply text-blue-500;
 }
 ```
-
-## Build Script
-
-The build script is very simple. This is it in its entirety:
-
-```sh
-echo "Cleaning docs directory...";
-rm -rf docs/*;
-
-echo "Copying public files...";
-cp -R ./public/* ./docs;
-
-echo "Building blog pages...";
-bun scripts/build-blog-pages.ts ./blog/*.md;
-
-echo "Generating Tailwind styles...";
-bun run tailwind;
-
-echo "Copying code highlight styles...";
-cp ./node_modules/highlight.js/styles/default.css ./docs/highlight.css;
-
-echo "Done!";
-```
-
-It is basically five steps:
-
-1. Clean the `docs` directory in preparation for file changes.
-2. Copy public files.
-3. Run a small script that runs all blog posts through `marked` and puts the
-   resulting HTML in the `docs` directory.
-4. Run Tailwind.
-5. Copy `highlight.js` styles into `docs`. This is a nice package for displaying
-   syntax-highlighted code blocks.
