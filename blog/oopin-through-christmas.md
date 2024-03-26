@@ -17,8 +17,8 @@ object-oriented code.
 Yes, unfortunately I'm aware of the negative connotations floating around online
 about object-oriented programming these days. It's my firmly-held belief that
 there's not enough nuance in those discussions. Each paradigm is useful and it
-would be best for us to be able to mix and match those to best suit the problem
-at hand.
+would be best for us to be able to mix and match those to suit the problem at
+hand.
 
 In general, I believe object-oriented programming is a great fit for domain
 programming, not because it models "real world" objects, but because it models
