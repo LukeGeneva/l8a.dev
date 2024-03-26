@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-LXT6DETMYL"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+
+      gtag('config', 'G-LXT6DETMYL');
+    </script>
+    <title>lukegeneva.dev</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="/output.css" rel="stylesheet" />
+    <link href="/highlight.css" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="auto-margin">
+      <a href="/"><h1 class="text-2xl font-bold">lukegeneva.dev</h1></a>
+      <p class="text-sm text-gray-500">
+        Programming-related ideas and writings.
+      </p>
+    </header>
+    <hr />
+    <main class="blog-page auto-margin"><h1>Calorie Counting</h1>
+<p>Mar 25, 2024</p>
+<h2>Part One</h2>
+<p>This problem is all about elves and how many Calories they are carrying in their
+inventories. With that said, let&#39;s first set up a simple test that captures the
+domain language and ensures we can add Calories to an elf&#39;s inventory. In a
+business sense, we are primarily concerned with the total number of Calories, so
+we&#39;ll capture that in the test.</p>
+<p>Here is what our test code might look like:</p>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">import</span> { expect, test } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;bun:test&#x27;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Elf</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./Elf&#x27;</span>;
+
+<span class="hljs-title function_">test</span>(<span class="hljs-string">&quot;that elf&#x27;s inventory tracks Calories&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">const</span> elf = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Elf</span>();
+    elf.<span class="hljs-title function_">addToInventory</span>(<span class="hljs-number">2000</span>);
+    elf.<span class="hljs-title function_">addToInventory</span>(<span class="hljs-number">1000</span>);
+    <span class="hljs-title function_">expect</span>(elf.<span class="hljs-property">totalCalories</span>).<span class="hljs-title function_">toBe</span>(<span class="hljs-number">3000</span>);
+});
+</code></pre><p>In this test, we instantiate an <code>Elf</code> and add a couple of Calorie counts to
+their inventory. At the end, we expect all of those Calories to be added up and
+reported by the <code>totalCalories</code> property.</p>
+<p>Now that that&#39;s done, we can implement our actual <code>Elf</code> class.</p>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Elf</span> {
+    <span class="hljs-keyword">private</span> _totalCalories = <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">get</span> <span class="hljs-title function_">totalCalories</span>() {
+        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">_totalCalories</span>;
+    }
+
+    addToInventory = <span class="hljs-function">(<span class="hljs-params">calories: <span class="hljs-built_in">number</span></span>) =&gt;</span> {
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">_totalCalories</span> += calories;
+    };
+}
+</code></pre><p>Now we can see that the test passes:</p>
+<pre><code class="hljs language-sh">bun <span class="hljs-built_in">test</span> v1.0.8 (2a405f69)
+
+src/day1/Elf.test.ts:
+✓ that elf<span class="hljs-string">&#x27;s inventory tracks Calories [0.06ms]
+
+ 1 pass
+ 0 fail
+ 1 expect() calls
+Ran 1 tests across 1 files. [8.00ms]</span>
+</code></pre><p>This is great, but there&#39;s still a lot missing. We need to parse some input and
+get a list of inventory-filled elves. For that, we can write a test using the
+example input from the problem.</p>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">import</span> { expect, test } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;bun:test&#x27;</span>;
+<span class="hljs-keyword">import</span> { parseInventoryList } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./parseInventoryList&#x27;</span>;
+
+<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">TEXT</span> = <span class="hljs-string">`1000
+2000
+3000
+
+4000
+
+5000
+6000
+
+7000
+8000
+9000
+
+10000`</span>;
+
+<span class="hljs-title function_">test</span>(<span class="hljs-string">&#x27;that list is created&#x27;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">const</span> elves = <span class="hljs-title function_">parseInventoryList</span>(<span class="hljs-variable constant_">TEXT</span>);
+    <span class="hljs-title function_">expect</span>(elves.<span class="hljs-property">length</span>).<span class="hljs-title function_">toBe</span>(<span class="hljs-number">5</span>);
+    <span class="hljs-title function_">expect</span>(elves[<span class="hljs-number">0</span>].<span class="hljs-property">totalCalories</span>).<span class="hljs-title function_">toBe</span>(<span class="hljs-number">6000</span>);
+    <span class="hljs-title function_">expect</span>(elves[<span class="hljs-number">1</span>].<span class="hljs-property">totalCalories</span>).<span class="hljs-title function_">toBe</span>(<span class="hljs-number">4000</span>);
+});
+</code></pre><p>And from that, we can make a simple function that handles the input parsing.</p>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Elf</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./Elf&#x27;</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">parseInventoryList</span>(<span class="hljs-params">text: <span class="hljs-built_in">string</span></span>): <span class="hljs-title class_">Array</span>&lt;<span class="hljs-title class_">Elf</span>&gt; {
+    <span class="hljs-keyword">const</span> elves = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Array</span>&lt;<span class="hljs-title class_">Elf</span>&gt;();
+    <span class="hljs-keyword">const</span> elfInventories = text.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;\n\n&#x27;</span>);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> inventory <span class="hljs-keyword">of</span> elfInventories) {
+        <span class="hljs-keyword">const</span> elf = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Elf</span>();
+        inventory
+            .<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;\n&#x27;</span>)
+            .<span class="hljs-title function_">map</span>(<span class="hljs-function">(<span class="hljs-params">n</span>) =&gt;</span> <span class="hljs-title class_">Number</span>.<span class="hljs-built_in">parseInt</span>(n, <span class="hljs-number">10</span>))
+            .<span class="hljs-title function_">forEach</span>(elf.<span class="hljs-property">addToInventory</span>);
+        elves.<span class="hljs-title function_">push</span>(elf);
+    }
+    <span class="hljs-keyword">return</span> elves;
+}
+</code></pre><p>Packaging up the code like this carries the benefit of leaving a very simple
+script to solve the problem. For example, it could look something like this:</p>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">const</span> elves = <span class="hljs-title function_">parseInventoryList</span>(input);
+<span class="hljs-keyword">const</span> maxCalorieElf = elves.<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">max, curr</span>) =&gt;</span>
+    curr.<span class="hljs-property">totalCalories</span> &gt; max.<span class="hljs-property">totalCalories</span> ? curr : max
+);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(maxCalorieElf.<span class="hljs-property">totalCalories</span>);
+</code></pre><p>Now, is this overkill? Yes. It&#39;s quite obvious that all we&#39;re being asked to do
+in this problem is sum some numbers and determine a max, but what I hope to
+illustrate is that, had this been more complex, we&#39;ve laid a pretty good
+foundation for understanding. When we look at the code snippet above, I think
+it&#39;s pretty clear what is being done. In fact, we&#39;ve left a little work that
+could be done in this area. The <code>elves.reduce</code> call just doesn&#39;t read very well.
+It&#39;s not immediately clear what it&#39;s doing. Let&#39;s clear that up by refactoring
+that portion to a named function.</p>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">const</span> elves = <span class="hljs-title function_">parseInventoryList</span>(input);
+<span class="hljs-keyword">const</span> elf = <span class="hljs-title function_">findElfWithMostCalories</span>(elves);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(elf.<span class="hljs-property">totalCalories</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">findElfWithMostCalories</span>(<span class="hljs-params">elves: <span class="hljs-built_in">Array</span>&lt;Elf&gt;</span>) {
+    <span class="hljs-keyword">return</span> elves.<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">max, curr</span>) =&gt;</span>
+        curr.<span class="hljs-property">totalCalories</span> &gt; max.<span class="hljs-property">totalCalories</span> ? curr : max
+    );
+}
+</code></pre><p>This reads much better. Even without reading the problem text, we can tell that
+the goal of this code is:</p>
+<ol>
+<li>Parse the input into a list of elves.</li>
+<li>Find the elf with the most Calories.</li>
+<li>Display that number.</li>
+</ol>
+<h2>Part Two</h2>
+<p>Part two of the day 1 problem set is only a minor change. Rather than getting
+the elf with the most Calories, we need to get the top three. This is a pretty
+easy change. We can simply sort the list of elves by the Calorie counts in
+descending order and then grab the first three elves from the array. Lucky for
+us, there&#39;s no domain changes here.</p>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">const</span> elves = <span class="hljs-title function_">parseInventoryList</span>(input);
+<span class="hljs-keyword">const</span> top3 = <span class="hljs-title function_">findTop3ElvesWithMostCalories</span>(elves);
+<span class="hljs-keyword">const</span> total = <span class="hljs-title function_">sumElfCalories</span>(top3);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(total);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">findTop3ElvesWithMostCalories</span>(<span class="hljs-params">elves: <span class="hljs-built_in">Array</span>&lt;Elf&gt;</span>) {
+    <span class="hljs-keyword">return</span> elves
+        .<span class="hljs-title function_">sort</span>(<span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> (a.<span class="hljs-property">totalCalories</span> &lt; b.<span class="hljs-property">totalCalories</span> ? <span class="hljs-number">1</span> : -<span class="hljs-number">1</span>))
+        .<span class="hljs-title function_">slice</span>(<span class="hljs-number">0</span>, <span class="hljs-number">3</span>);
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">sumElfCalories</span>(<span class="hljs-params">elves: <span class="hljs-built_in">Array</span>&lt;Elf&gt;</span>) {
+    <span class="hljs-keyword">return</span> elves.<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">sum, elf</span>) =&gt;</span> sum + elf.<span class="hljs-property">totalCalories</span>, <span class="hljs-number">0</span>);
+}
+</code></pre></main>
+    <footer class="flex gap-4 justify-center py-4">
+      <a
+        class="flex gap-1 items-center"
+        href="https://github.com/LukeGeneva"
+        target="_blank"
+        ><img width="30" height="30" src="/images/github.png" />LukeGeneva</a
+      >
+      <a
+        class="flex gap-1 items-center"
+        href="https://twitter.com/GenevaLuke"
+        target="_blank"
+        ><img width="30" height="30" src="/images/x.png" />@GenevaLuke</a
+      >
+    </footer>
+  </body>
+</html>
