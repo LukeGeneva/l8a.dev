@@ -1,5 +1,7 @@
 # Calorie Counting
 
+description: OOPin' Through Christmas - Advent of Code 2022 - Day 1 - Calorie Counting
+
 Mar 25, 2024
 
 [https://adventofcode.com/2022/day/1](https://adventofcode.com/2022/day/1)

@@ -23,10 +23,15 @@ async function main() {
   for (let fp of filepaths) {
     const markdown = fs.readFileSync(fp, 'utf-8');
     const title = markdown.match(/# .*/).at(0).replace('# ', '');
+    const description = markdown
+      .match(/description\: .*/)
+      .at(0)
+      .replace('description: ', '');
     const content = await marked.parse(markdown);
     const html = template
       .replace('{{content}}', content)
-      .replace('{{title}}', title);
+      .replace('{{title}}', title)
+      .replace('{{description}}', description);
     const htmlFilename = path.basename(fp).replace('.md', '.html');
     fs.writeFileSync(`./docs/blog/${htmlFilename}`, html);
     console.log(`Built ${htmlFilename}`);

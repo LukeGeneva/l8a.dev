@@ -1,5 +1,7 @@
 # Modular Todo
 
+description: An example todo project written in a modular manner.
+
 Mar 22, 2024
 
 I've been wanting to do an example project like this for a while. What I'd like

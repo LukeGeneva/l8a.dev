@@ -1,5 +1,7 @@
 # The Internet and the False Hope of Easy Answers
 
+description: Thoughts on the internet and lazily seeking out answers and opinions.
+
 May 31, 2024
 
 I had the sudden urge recently to Google a trivial matter such as, "How to read

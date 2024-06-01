@@ -1,5 +1,7 @@
 # OOPin' Through Christmas
 
+description: An overview of using test-driven development and object-oriented programming to solve Advent of Code problems.
+
 Mar 24, 2024
 
 You may be familiar with [Advent of Code](https://adventofcode.com/). If not,

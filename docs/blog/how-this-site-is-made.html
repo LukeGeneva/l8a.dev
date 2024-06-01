@@ -18,6 +18,7 @@
     <title>How This Site is Made</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="A tour of the software development process used to create this site." />
     <link href="/output.css" rel="stylesheet" />
     <link href="/highlight.css" rel="stylesheet" />
   </head>
@@ -30,6 +31,7 @@
     </header>
     <hr />
     <main class="blog-page auto-margin"><h1>How This Site is Made</h1>
+<p>description: A tour of the software development process used to create this site.</p>
 <p>Mar 16, 2024</p>
 <p>I provide this page here in case you are wondering how this site is made. It&#39;s
 fairly simple, but requires some explanation.</p>
@@ -54,15 +56,15 @@ where each blog post is fed into. What&#39;s nice about this is that, by wrappin
 the template page in a <code>blog-page</code> CSS class, I can easily target the rendered
 blog post HTML for styling like so:</p>
 <pre><code class="hljs language-css"><span class="hljs-selector-class">.blog-page</span> <span class="hljs-selector-tag">h1</span> {
-  <span class="hljs-keyword">@apply</span> text-<span class="hljs-number">4</span>xl font-bold py-<span class="hljs-number">2</span>;
+    <span class="hljs-keyword">@apply</span> text-<span class="hljs-number">4</span>xl font-bold py-<span class="hljs-number">2</span>;
 }
 
 <span class="hljs-selector-class">.blog-page</span> <span class="hljs-selector-tag">h2</span> {
-  <span class="hljs-keyword">@apply</span> text-<span class="hljs-number">2</span>xl font-bold py-<span class="hljs-number">2</span>;
+    <span class="hljs-keyword">@apply</span> text-<span class="hljs-number">2</span>xl font-bold py-<span class="hljs-number">2</span>;
 }
 
 <span class="hljs-selector-class">.blog-page</span> <span class="hljs-selector-tag">a</span> {
-  <span class="hljs-keyword">@apply</span> text-blue-<span class="hljs-number">500</span>;
+    <span class="hljs-keyword">@apply</span> text-blue-<span class="hljs-number">500</span>;
 }
 </code></pre></main>
     <footer class="flex gap-4 justify-center py-4">
