@@ -692,7 +692,7 @@ html {
   color: rgb(59 130 246 / var(--tw-text-opacity));
 }
 
-.blog-page p:first-of-type {
+.blog-page :not(blockquote) > p:first-of-type {
   font-size: 0.875rem;
   line-height: 1.25rem;
   --tw-text-opacity: 1;
@@ -701,6 +701,7 @@ html {
 
 .blog-page p {
   margin-bottom: 1.5rem;
+  text-align: justify;
 }
 
 .blog-page p code {
@@ -719,6 +720,15 @@ html {
 
 .blog-page ol {
   list-style-type: decimal;
+}
+
+.blog-page blockquote {
+  border-left-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(37 99 235 / var(--tw-border-opacity));
+  padding-left: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 .post-list > li {
