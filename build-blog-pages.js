@@ -11,7 +11,7 @@ const marked = new Marked(
       const language = hljs.getLanguage(lang) ? lang : 'plaintext';
       return hljs.highlight(code, { language }).value;
     },
-  }),
+  })
 );
 
 async function main() {
@@ -22,8 +22,11 @@ async function main() {
 
   for (let fp of filepaths) {
     const markdown = fs.readFileSync(fp, 'utf-8');
+    const title = markdown.match(/# .*/).at(0).replace('# ', '');
     const content = await marked.parse(markdown);
-    const html = template.replace('{{content}}', content);
+    const html = template
+      .replace('{{content}}', content)
+      .replace('{{title}}', title);
     const htmlFilename = path.basename(fp).replace('.md', '.html');
     fs.writeFileSync(`./docs/blog/${htmlFilename}`, html);
     console.log(`Built ${htmlFilename}`);
