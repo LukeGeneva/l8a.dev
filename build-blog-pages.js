@@ -27,7 +27,9 @@ async function main() {
       .match(/description\: .*/)
       .at(0)
       .replace('description: ', '');
-    const content = await marked.parse(markdown);
+    const content = await marked
+      .parse(markdown)
+      .replace(/description\: .*/, '');
     const html = template
       .replace('{{content}}', content)
       .replace('{{title}}', title)
