@@ -27,7 +27,7 @@ Posts are written in markdown and converted to HTML with
 build process and the rendered HTML files get placed in `docs/blog`.
 
 I use a simple [template
-page](https://github.com/LukeGeneva/lukegeneva.dev/blob/master/blog-page.template.html)
+page](https://github.com/LukeGeneva/l8a.dev/blob/master/blog-page.template.html)
 where each blog post is fed into. What's nice about this is that, by wrapping
 the template page in a `blog-page` CSS class, I can easily target the rendered
 blog post HTML for styling like so:

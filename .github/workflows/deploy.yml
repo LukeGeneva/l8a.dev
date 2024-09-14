@@ -24,6 +24,6 @@ jobs:
 
       - name: Copy files to VPS
         run: |
-          scp -i ~/.ssh/id_rsa -rv ./docs ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }}:/var/www/l8a.dev
+          scp -i ~/.ssh/id_rsa -r ./docs/* ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }}:/var/www/l8a.dev
         env:
           SSH_AUTH_SOCK: /tmp/ssh_auth.sock

@@ -38,7 +38,7 @@ practice, many of our business requirements can change quite drastically.
 I will continue to publish these as time allows. I hope that readers can get
 something positive out of all this. If you have questions or comments, please
 open an issue in [this
-repository](https://github.com/LukeGeneva/lukegeneva.dev/issues) on GitHub.
+repository](https://github.com/LukeGeneva/l8a.dev/issues) on GitHub.
 
 Please note that the solutions here may seem a bit pedantic or overkill, but I
 don't necessarily think they are over-engineered. The goal is not to present the
