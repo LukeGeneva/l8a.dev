@@ -1,5 +1,5 @@
 {
-  "name": "lukegeneva.dev",
+  "name": "l8a.dev",
   "scripts": {
     "build": "npm run tailwind && node build-blog-pages.js",
     "dev": "nodemon",
