@@ -653,6 +653,10 @@ html {
   overflow-y: scroll;
 }
 
+ol {
+  margin-bottom: 0.75rem;
+}
+
 .auto-margin {
   margin-left: auto;
   margin-right: auto;
@@ -684,6 +688,14 @@ html {
   padding-top: 1rem;
   font-size: 1.5rem;
   line-height: 2rem;
+  font-weight: 700;
+}
+
+.blog-page h3 {
+  padding-bottom: 0.5rem;
+  padding-top: 1rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
   font-weight: 700;
 }
 
