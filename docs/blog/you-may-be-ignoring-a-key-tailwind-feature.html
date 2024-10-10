@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-LXT6DETMYL"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+
+      gtag('config', 'G-LXT6DETMYL');
+    </script>
+    <title>You May Be Ignoring a Key Tailwind Feature</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="No more messy markup." />
+    <link href="/output.css" rel="stylesheet" />
+    <link href="/highlight.css" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="auto-margin">
+      <a href="/"><h1 class="text-2xl font-bold">l8a.dev</h1></a>
+      <p class="text-sm text-gray-500">
+        Programming-related ideas and writings.
+      </p>
+    </header>
+    <hr />
+    <main class="blog-page auto-margin"><h1>You May Be Ignoring a Key Tailwind Feature</h1>
+<p>
+<p>Oct 10, 2024</p>
+<p>There is more than a fair bit of talk about Tailwind on the internet. Most of it
+isn&#39;t great and the one thing that seems common throughout is that the opinions
+are strongly held, whatever they may be.</p>
+<p>If you want my opinion, I&#39;ll say I think Tailwind is great. It speeds up my
+workflow quite a bit. If you want me to say something I don&#39;t like about it,
+that&#39;s okay too. I&#39;ll say I don&#39;t like that it adds a build step. It adds just
+that extra bit of complexity.</p>
+<p>It&#39;s really no matter. We can choose to use it or not.</p>
+<p>One common complaint that I see though, that I believe to be misguided is that
+it muddies up markup. That may be true, but only if we&#39;re not using Tailwind to
+its full potential. Most of these complaints seem to completely be missing the
+<code>@apply</code> directive. It&#39;s a great feature, and, judging by the examples I see
+online, is one that is drastically under-used.</p>
+<p>The <code>@apply</code> directive allows us to use Tailwind&#39;s utility classes within our
+own custom CSS classes. With it, we are able to group multiple utility classes
+under one CSS rule, like so:</p>
+<h2>Long Version</h2>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bg-blue-500 text-white font-bold py-2 px-4 rounded&quot;</span>&gt;</span>
+  Click Me
+<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</code></pre><h2>Shortened with <code>@apply</code></h2>
+<pre><code class="hljs language-css"><span class="hljs-selector-class">.btn</span> {
+  <span class="hljs-keyword">@apply</span> bg-blue-<span class="hljs-number">500</span> text-white font-bold py-<span class="hljs-number">2</span> px-<span class="hljs-number">4</span> rounded;
+}
+</code></pre><pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn&quot;</span>&gt;</span>Click Me<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</code></pre><p>It&#39;s important to note that we don&#39;t lose any customization ability here.
+Cascading styles continue to work the same whether we use <code>@apply</code> or not.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn text-lg&quot;</span>&gt;</span>Click Me<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</code></pre><p>Tailwind isn&#39;t a completely different way writing CSS. It&#39;s a shortcut, or a
+toolkit. If CSS is a screwdriver, Tailwind is a drill. Some treat it like a
+hammer.</p>
+</main>
+    <footer class="flex gap-4 justify-center py-4">
+      <a
+        class="flex gap-1 items-center"
+        href="https://github.com/LukeGeneva"
+        target="_blank"
+        ><img
+          width="30"
+          height="30"
+          src="/images/github.png"
+          alt="GitHub - Luke Geneva"
+        />LukeGeneva</a
+      >
+      <a
+        class="flex gap-1 items-center"
+        href="https://twitter.com/GenevaLuke"
+        target="_blank"
+        ><img
+          width="30"
+          height="30"
+          src="/images/x.png"
+          alt="X - Luke Geneva"
+        />@GenevaLuke</a
+      >
+    </footer>
+  </body>
+</html>
