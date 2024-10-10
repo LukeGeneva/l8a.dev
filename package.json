@@ -2,8 +2,8 @@
   "name": "l8a.dev",
   "scripts": {
     "build": "npm run tailwind && node build-blog-pages.js",
-    "dev": "nodemon",
     "serve": "http-server -c-1 ./docs",
+    "start": "nodemon",
     "tailwind": "tailwindcss -i ./input.css -o ./docs/output.css"
   },
   "devDependencies": {
