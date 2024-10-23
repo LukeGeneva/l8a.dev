@@ -49,6 +49,13 @@ with teammates and stakeholders.
 
 Thank you all!
 
+**NOTE:** After going through a couple of these, I think the better approach is
+to provide my implementation and write some detailed commentary explaining the
+code and discussing what went into the decision-making. I think this is much
+easier to follow than a step-by-step illustration, and is also more manageable
+from a writing standpoint, as the alternative takes up an exorbitant amount of
+time.
+
 ## 2022
 
-[Day 1: Calorie Counting](/blog/otc-2022-day1-calorie-counting.html)
+-   [Day 1: Calorie Counting](/blog/otc-2022-day1-calorie-counting.html)
