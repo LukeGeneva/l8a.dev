@@ -1,0 +1,130 @@
+:root {
+  --primary-bg-color: #1c314b;
+  --terminal-bg-color: #1b2733;
+  --terminal-border: #37834f;
+  --terminal-color: #00a700;
+  --terminal-link-color: #61afef;
+  --terminal-link-hover-color: #2c4f6b;
+}
+
+body {
+  background-color: var(--primary-bg-color);
+  font-family: 'Courier New', monospace;
+  margin: 0;
+}
+
+main {
+  padding: 0.5rem;
+}
+
+nav {
+  color: white;
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  padding: 1rem;
+}
+
+nav a,
+nav a:visited {
+  color: white;
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+nav a.active {
+  text-decoration: underline;
+  color: var(--terminal-color);
+}
+
+.avatar {
+  border-radius: 50%;
+  border: 3px solid black;
+  position: relative;
+  top: 80px;
+  left: 10px;
+  width: 125px;
+  height: 125px;
+}
+
+.banner {
+  background-image: url('banner.jpeg');
+  background-size: cover;
+  height: 150px;
+  position: relative;
+}
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 776px;
+}
+
+.prompt-arrow {
+  color: var(--terminal-color);
+}
+
+.prompt-user {
+  color: #61afef;
+}
+
+.terminal {
+  background-color: var(--terminal-bg-color);
+  border: 3px solid var(--terminal-border);
+  border-radius: 0.5rem;
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 0.3),
+    0 2px 4px -2px rgb(0 0 0 / 0.3);
+  color: var(--terminal-color);
+  line-height: 1.5;
+  padding: 0.5rem;
+}
+
+.terminal a,
+.terminal a:visited {
+  color: var(--terminal-link-color);
+}
+
+.terminal a:hover {
+  color: var(--terminal-link-hover-color);
+}
+
+.text-white {
+  color: white;
+}
+
+.sm {
+  display: initial;
+}
+
+.lg {
+  display: none;
+}
+
+@media screen and (min-width: 776px) {
+  main {
+    padding: 0;
+  }
+
+  .avatar {
+    width: 150px;
+    height: 150px;
+    top: 115px;
+  }
+
+  .banner {
+    height: 200px;
+    margin-bottom: 1rem;
+  }
+
+  .sm {
+    display: none;
+  }
+
+  .lg {
+    display: initial;
+  }
+}

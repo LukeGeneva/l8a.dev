@@ -1,6 +1,0 @@
-{
-  "watch": ["blog/", "./input.css", "./blog-page.template.html"],
-  "ignore": ["docs"],
-  "exec": "npm run build && npm run serve",
-  "ext": "md"
-}
