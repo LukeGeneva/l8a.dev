@@ -1,7 +1,7 @@
 {
   "name": "l8a.dev",
   "scripts": {
-    "start": "bun public/*.html"
+    "start": "bun src/index.ts"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
