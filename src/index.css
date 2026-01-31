@@ -1,7 +1,7 @@
 :root {
   --primary-bg-color: #1c314b;
   --terminal-bg-color: #1b2733;
-  --terminal-border: #37834f;
+  --terminal-border: #004946;
   --terminal-color: #00a700;
   --terminal-link-color: #61afef;
   --terminal-link-hover-color: #2c4f6b;
@@ -42,7 +42,7 @@ nav a.active {
 
 .avatar {
   border-radius: 50%;
-  border: 3px solid black;
+  border: 3px solid var(--terminal-border);
   position: relative;
   top: 80px;
   left: 10px;
@@ -54,6 +54,7 @@ nav a.active {
   background-size: cover;
   height: 150px;
   position: relative;
+  border-bottom: 3px solid var(--terminal-border);
 }
 
 .container {
@@ -117,6 +118,10 @@ nav a.active {
   .banner {
     height: 200px;
     margin-bottom: 1rem;
+    border-left: 3px solid var(--terminal-border);
+    border-right: 3px solid var(--terminal-border);
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
   }
 
   .sm {
