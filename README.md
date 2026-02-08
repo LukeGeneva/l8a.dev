@@ -1,3 +1,3 @@
 # l8a.dev
 
-Personal blog.
+Personal site.

@@ -109,6 +109,10 @@ nav a.active {
     padding: 0;
   }
 
+  nav {
+    font-size: 1.25rem;
+  }
+
   .avatar {
     width: 150px;
     height: 150px;

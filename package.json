@@ -1,14 +1,12 @@
 {
   "name": "l8a.dev",
   "scripts": {
-    "start": "bun src/index.ts"
+    "start": "http-server src -c-1"
   },
   "devDependencies": {
-    "prettier": "^3.2.5",
-    "@types/bun": "latest"
+    "http-server": "^14.1.1",
+    "prettier": "^3.2.5"
   },
-  "module": "index.ts",
-  "type": "module",
   "private": true,
   "peerDependencies": {
     "typescript": "^5"
