@@ -79,6 +79,7 @@ nav a.active {
     0 4px 6px -1px rgb(0 0 0 / 0.3),
     0 2px 4px -2px rgb(0 0 0 / 0.3);
   color: var(--terminal-color);
+  font-size: 1.25rem;
   line-height: 1.5;
   padding: 0.5rem;
 }
