@@ -1,14 +1,17 @@
 {
   "name": "l8a.dev",
   "scripts": {
-    "start": "http-server src -c-1"
+    "build": "bun build **/*.html --outdir dist",
+    "start": "bun ./src/**/*.html"
   },
   "devDependencies": {
-    "http-server": "^14.1.1",
-    "prettier": "^3.2.5"
+    "prettier": "^3.2.5",
+    "@types/bun": "latest"
   },
   "private": true,
   "peerDependencies": {
     "typescript": "^5"
-  }
+  },
+  "module": "index.ts",
+  "type": "module"
 }
