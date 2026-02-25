@@ -84,6 +84,10 @@ nav a.active {
   padding: 0.5rem;
 }
 
+.terminal span.inline-code {
+  color: #e5a044;
+}
+
 .terminal a,
 .terminal a:visited {
   color: var(--terminal-link-color);

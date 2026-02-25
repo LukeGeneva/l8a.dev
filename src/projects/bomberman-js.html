@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="../img/favicon.png" />
+    <link rel="stylesheet" href="../index.css" />
+    <link rel="stylesheet" href="./bomberman-js.css" />
+    <title>l8a.dev | Bomberman JS</title>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="banner">
+          <a href="/">
+            <img
+              class="avatar"
+              src="../img/avatar.webp"
+              width="125"
+              height="125"
+            />
+          </a>
+        </div>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/blog">Blog</a>
+          <a class="active" href="/projects">Projects</a>
+        </nav>
+      </header>
+      <main>
+        <section>
+          <h1 class="text-white">Bomberman JS</h1>
+          <div class="terminal">
+            <p>
+              A browser-based Bomberman clone demo written in vanilla
+              JavaScript. The player navigates a tile-based grid, places bombs,
+              and destroys breakable walls akin to the classic gameplay.
+            </p>
+
+            <p>
+              Source:
+              <a
+                href="https://github.com/LukeGeneva/bomberman-js"
+                target="_blank"
+                >github.com/LukeGeneva/bomberman-js</a
+              >
+            </p>
+
+            <img
+              class="screenshot"
+              src="/bomberman-js.webp"
+              alt="Bomberman JS screenshot"
+              width="640"
+              height="400"
+            />
+          </div>
+
+          <h2 class="text-white">Stack</h2>
+          <div class="terminal">
+            <ul>
+              <li>
+                Phaser.js (v2) &mdash; game framework providing the render loop,
+                arcade physics, sprite management, input events, and tilemap
+                support
+              </li>
+              <li>
+                Vanilla JavaScript (ES5) &mdash; all game logic written without
+                a framework or module bundler
+              </li>
+              <li>
+                Node.js + Express &mdash; lightweight server delivering the
+                static build output
+              </li>
+              <li>
+                Gulp &mdash; build pipeline handling linting, file
+                concatenation, and minification
+              </li>
+            </ul>
+          </div>
+
+          <h2 class="text-white">Architecture</h2>
+          <div class="terminal">
+            <p>
+              The game runs entirely in the browser. Phaser drives the lifecycle
+              with three phases:
+            </p>
+            <ul>
+              <li><span class="inline-code">preload</span> (assets)</li>
+              <li><span class="inline-code">create</span> (scene setup)</li>
+              <li><span class="inline-code">update</span> (per-frame logic)</li>
+            </ul>
+            <p>
+              The <span class="inline-code">240x208</span> canvas is
+              pixel-scaled 2x with smoothing disabled to preserve the retro
+              look.
+            </p>
+
+            <p><strong>Tilemap</strong></p>
+            <p>Levels are defined as Tiled JSON tilemaps with three layers:</p>
+            <ul>
+              <li>
+                <span class="inline-code">Base</span> (floor, no collision)
+              </li>
+              <li>
+                <span class="inline-code">Fixed</span> (indestructible walls)
+              </li>
+              <li>
+                <span class="inline-code">Breakable</span> (destructible blocks)
+              </li>
+            </ul>
+            <p>
+              Collision is registered per tile index, letting Phaser's arcade
+              physics system handle wall contacts automatically.
+            </p>
+
+            <p><strong>Entity System</strong></p>
+            <p>
+              Each game object extends
+              <span class="inline-code">Phaser.Sprite</span>
+              using the prototypal inheritance pattern:
+            </p>
+            <ul>
+              <li><span class="inline-code">Bomber</span></li>
+              <li><span class="inline-code">Bomb</span></li>
+              <li><span class="inline-code">Explosion</span></li>
+            </ul>
+            <p>
+              On construction, entities add themselves to named Phaser groups:
+            </p>
+            <ul>
+              <li><span class="inline-code">bombers</span></li>
+              <li><span class="inline-code">bombs</span></li>
+              <li><span class="inline-code">explosions</span></li>
+            </ul>
+            <p>
+              These groups are passed to
+              <span class="inline-code">physics.arcade.collide</span> and
+              <span class="inline-code">physics.arcade.overlap</span> in the
+              update loop, enabling batch collision resolution without manual
+              bookkeeping.
+            </p>
+
+            <p><strong>Input Queue</strong></p>
+            <p>
+              Raw key events are captured by an
+              <span class="inline-code">InputHandler</span> and pushed into a
+              shared input queue on the game object. Each frame, the active
+              <span class="inline-code">Bomber</span> drains the queue and
+              processes commands:
+            </p>
+            <ul>
+              <li><span class="inline-code">move-north</span></li>
+              <li><span class="inline-code">move-south</span></li>
+              <li><span class="inline-code">move-east</span></li>
+              <li><span class="inline-code">move-west</span></li>
+              <li><span class="inline-code">stop</span></li>
+              <li><span class="inline-code">drop-bomb</span></li>
+            </ul>
+            <p>
+              This decouples input capture from game state updates and makes the
+              intent of each action explicit.
+            </p>
+
+            <p><strong>Bomb &amp; Explosion Spreading</strong></p>
+            <p>
+              When a Bomb is placed, it begins ticking. After a configurable
+              fuse duration (default 3 seconds), it fires a
+              <span class="inline-code">Phaser.Signal</span> to notify the
+              bomber that a slot has freed up, then triggers an
+              <span class="inline-code">ExplosionSpreader</span>. The spreader
+              recursively traverses the tile grid in four cardinal
+              directions&mdash;halting at fixed walls or after consuming the
+              first breakable tile. Each step spawns an
+              <span class="inline-code">Explosion</span> sprite in place.
+              Overlap callbacks handle the rest: explosions kill bombers on
+              contact, chain-detonate other bombs, and remove breakable tiles
+              from the map.
+            </p>
+
+            <p><strong>Build Pipeline</strong></p>
+            <p>
+              Gulp concatenates the Phaser library and all game modules into a
+              single <span class="inline-code">app.min.js</span>. A dev build
+              skips minification for readable output; a release build runs
+              <span class="inline-code">uglify</span>.
+              <span class="inline-code">JSHint</span> lints game source
+              (excluding the lib directory) before each build. Static assets and
+              the HTML entry point are copied to dist alongside the bundled
+              script.
+            </p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
