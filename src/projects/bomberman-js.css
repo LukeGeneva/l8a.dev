@@ -19,9 +19,6 @@ h2.text-white {
 .screenshot {
   display: block;
   margin: 1rem auto 0;
-  width: 100%;
-  max-width: 640px;
-  height: 400px;
   background-color: #0d1a26;
   border: 2px dashed var(--terminal-border);
   border-radius: 0.25rem;
