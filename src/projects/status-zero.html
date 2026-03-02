@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="../img/favicon.png" />
+    <link rel="stylesheet" href="../index.css" />
+    <link rel="stylesheet" href="../projects.css" />
+    <title>l8a.dev | Status Zero</title>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="banner">
+          <a href="/">
+            <img
+              class="avatar"
+              src="../img/avatar.webp"
+              width="125"
+              height="125"
+            />
+          </a>
+        </div>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/blog">Blog</a>
+          <a class="active" href="/projects">Projects</a>
+        </nav>
+      </header>
+      <main>
+        <section>
+          <h1 class="text-white">Status Zero</h1>
+          <div class="terminal">
+            <p>
+              A Node.js automation tool built during my time at SelectQuote that
+              eliminated manual status check-ins by scraping git commit logs
+              from the previous workday and submitting them to Status Hero
+              automatically. It was designed to run on a cron job so there was
+              never any need to think about check-ins again.
+            </p>
+
+            <p>
+              Status Hero rebranded to Steady in 2024 and no longer works the
+              same way, so this project is now defunct&mdash;but it was a fun
+              one that seems worth sharing.
+            </p>
+
+            <p>
+              Source:
+              <a
+                href="https://github.com/LukeGeneva/status-zero"
+                target="_blank"
+                >View on GitHub</a
+              >
+            </p>
+          </div>
+
+          <h2 class="text-white">Stack</h2>
+          <div class="terminal">
+            <ul>
+              <li>Node.js (ES6) &mdash; runtime and scripting environment</li>
+              <li>
+                Puppeteer (v2) &mdash; headless browser automation for logging
+                into Status Hero and submitting the check-in form
+              </li>
+              <li>
+                Moment.js &mdash; date manipulation for calculating the previous
+                workday
+              </li>
+              <li>
+                js-yaml &mdash; parses the YAML config file for credentials and
+                project directories
+              </li>
+              <li>Jest &mdash; unit testing for business day logic</li>
+            </ul>
+          </div>
+
+          <h2 class="text-white">Architecture</h2>
+          <div class="terminal">
+            <p>
+              The tool was intentionally minimal&mdash;three modules wired
+              together in a single orchestration script.
+            </p>
+
+            <p><strong>Configuration</strong></p>
+            <p>
+              A <span class="inline-code">config.yaml</span> file held Status
+              Hero credentials, the git author name to filter by, and a list of
+              local repository paths to scan. Two control flags allowed opting
+              out of the actual form submission (<span class="inline-code"
+                >willSubmit</span
+              >) or running the browser in non-headless mode (<span
+                class="inline-code"
+                >willRunHeadless</span
+              >) for debugging.
+            </p>
+
+            <p><strong>Business Day Calculation</strong></p>
+            <p>
+              <span class="inline-code">calendar.js</span> resolved the previous
+              workday from today's date. If today was Monday it stepped back
+              three days to Friday; otherwise it stepped back one day.
+            </p>
+
+            <p><strong>Git Log Collection</strong></p>
+            <p>
+              <span class="inline-code">fetchAllGitLogs.js</span> iterated over
+              the configured repository directories and ran a
+              <span class="inline-code">git log</span> command in each, filtered
+              to the previous workday and the configured author. Commit subjects
+              and bodies were collected using the
+              <span class="inline-code">%s%n%b</span> format and concatenated
+              into a single string ready for the Status Hero form field.
+            </p>
+
+            <p><strong>Browser Automation</strong></p>
+            <p>
+              The main entry point launched a Puppeteer browser, navigated to
+              the Status Hero sign-in page, typed credentials, and submitted the
+              login form. It then opened the status edit page, cleared the
+              existing input, pasted the aggregated commit log, checked the
+              goals-completed checkbox, and submitted&mdash;all conditionally
+              gated on the <span class="inline-code">willSubmit</span> flag so a
+              dry run was always one config change away.
+            </p>
+
+            <p><strong>Cron Integration</strong></p>
+            <p>
+              The script was stateless and side-effect-free outside of the
+              browser session, making it safe to schedule with a standard cron
+              entry. A typical setup ran it each weekday morning before standup.
+            </p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
