@@ -6,6 +6,7 @@ const ROUTES: Record<string, string> = {
   '/projects': 'src/projects.html',
   '/projects/bomberman-js': 'src/projects/bomberman-js.html',
   '/projects/status-zero': 'src/projects/status-zero.html',
+  '/blog/pragmatic-architecture': 'src/blog/pragmatic-architecture.html',
 };
 
 const MIME_TYPES: Record<string, string> = {

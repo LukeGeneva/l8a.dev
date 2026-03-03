@@ -163,6 +163,7 @@ h2.text-white {
   max-width: 100%;
   height: auto;
   background-color: #0d1a26;
-  border: 2px dashed var(--terminal-border);
+  border: 2px solid var(--terminal-border);
   border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
 }

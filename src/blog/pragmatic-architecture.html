@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>The Trap of &ldquo;Correct&rdquo; Architecture | l8a.dev</title>
+    <meta
+      name="description"
+      content="On the trap of over-engineering and how I learned that pragmatic software &mdash; software that actually solves problems &mdash; is the real craft."
+    />
+    <meta name="author" content="Luke Geneva" />
+    <link rel="canonical" href="https://l8a.dev/blog/pragmatic-architecture" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:title"
+      content="The Trap of &ldquo;Correct&rdquo; Architecture"
+    />
+    <meta
+      property="og:description"
+      content="On the trap of over-engineering and how I learned that pragmatic software &mdash; software that actually solves problems &mdash; is the real craft."
+    />
+    <meta
+      property="og:url"
+      content="https://l8a.dev/blog/pragmatic-architecture"
+    />
+    <meta
+      property="og:image"
+      content="https://l8a.dev/img/pragmatic-architecture.webp"
+    />
+    <meta property="article:author" content="Luke Geneva" />
+    <meta property="article:published_time" content="2026-03-02" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="The Trap of &ldquo;Correct&rdquo; Architecture"
+    />
+    <meta
+      name="twitter:description"
+      content="On the trap of over-engineering and how I learned that pragmatic software &mdash; software that actually solves problems &mdash; is the real craft."
+    />
+    <meta
+      name="twitter:image"
+      content="https://l8a.dev/img/pragmatic-architecture.webp"
+    />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "The Trap of \"Correct\" Architecture",
+        "description": "On the trap of over-engineering and how I learned that pragmatic software — software that actually solves problems — is the real craft.",
+        "author": {
+          "@type": "Person",
+          "name": "Luke Geneva",
+          "url": "https://l8a.dev"
+        },
+        "datePublished": "2026-03-02",
+        "url": "https://l8a.dev/blog/pragmatic-architecture",
+        "image": "https://l8a.dev/img/pragmatic-architecture.webp",
+        "publisher": {
+          "@type": "Person",
+          "name": "Luke Geneva",
+          "url": "https://l8a.dev"
+        }
+      }
+    </script>
+
+    <link rel="icon" type="image/png" href="../img/favicon.png" />
+    <link rel="stylesheet" href="../index.css" />
+    <link rel="stylesheet" href="../blog.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="banner">
+          <a href="/">
+            <img
+              class="avatar"
+              src="../img/avatar.webp"
+              width="125"
+              height="125"
+            />
+          </a>
+        </div>
+        <nav>
+          <a href="/">Home</a>
+          <a class="active" href="/blog">Blog</a>
+          <a href="/projects">Projects</a>
+        </nav>
+      </header>
+      <main>
+        <article>
+          <h1 class="text-white">
+            The Trap of &ldquo;Correct&rdquo; Architecture
+          </h1>
+
+          <img
+            class="screenshot"
+            src="/img/pragmatic-architecture.webp"
+            alt="The Trap of Correct Architecture"
+            width="776"
+            height="400"
+          />
+
+          <div class="terminal">
+            <p>
+              For a long time, I believed there was a right way to build
+              software. Not just a good way &mdash; the right way. I read
+              everything I could get my hands on: books on domain-driven design,
+              papers on distributed systems, blog posts about CQRS and event
+              sourcing and the latest patterns the industry was championing. I
+              wanted to master the craft, and I was convinced that mastery meant
+              finding the foolproof, sure-fire architecture for any problem.
+            </p>
+            <p>
+              For a while, it seemed to work. My code was reliable, backed
+              extensively by tests, and read beautifully. My work was slow, but
+              I told myself that was just the price of doing things right.
+            </p>
+            <p>Then the cracks started to show.</p>
+          </div>
+
+          <h2 class="text-white">When Collaboration Breaks Down</h2>
+          <div class="terminal">
+            <p>
+              The first warning sign was collaboration. Whenever I brought
+              someone else onto a project, I had to teach them my system first.
+              And it never quite worked. Whatever they contributed didn&rsquo;t
+              fit the way I&rsquo;d envisioned it, and I&rsquo;d quietly go back
+              and fix it myself. I told myself this was a people problem. It
+              wasn&rsquo;t.
+            </p>
+            <p>
+              The second warning sign was momentum. Projects I poured myself
+              into had a tendency to stagnate. Meanwhile, I kept looking back at
+              earlier work &mdash; simpler work &mdash; that people actually
+              used and loved. What was different about those?
+            </p>
+            <p>
+              The answer was straightforward: they solved problems. They were
+              true tools. Pragmatic. No ceremony, no architecture for
+              architecture&rsquo;s sake. Just software that did what it needed
+              to do.
+            </p>
+            <p>
+              I had let my desire to be seen as a craftsman lead me somewhere
+              counterproductive &mdash; into over-engineering, into solutions
+              that begged for a problem to fit into rather than the other way
+              around.
+            </p>
+          </div>
+
+          <h2 class="text-white">What Pragmatism Actually Looks Like</h2>
+          <div class="terminal">
+            <p>
+              The shift changed how I work with other people as much as it
+              changed how I write code. When a solution is grounded in a problem
+              everyone already understands, it&rsquo;s much easier to talk
+              about, reason about, and work on together. You don&rsquo;t have to
+              teach someone a special, non-obvious system before they can
+              contribute. The solution makes itself obvious.
+            </p>
+            <p>
+              The trap is that it&rsquo;s easy to convince yourself your complex
+              solution is easy to understand &mdash; especially when
+              you&rsquo;re the one at the center of it. Developing the ability
+              to see and prevent that trap is important.
+            </p>
+            <p>
+              If you find yourself editing thirty-plus files to add a feature,
+              something has probably gone wrong upstream. Good architecture
+              makes changes local. Complexity that spreads everywhere is
+              complexity that will hurt you.
+            </p>
+          </div>
+
+          <h2 class="text-white">Experience Is the Real Teacher</h2>
+          <div class="terminal">
+            <p>
+              None of this is something you can fully learn from a book,
+              including this post. Experience is the great teacher &mdash; it
+              does more for you than any other form of learning, likely more
+              than all others combined.
+            </p>
+            <p>
+              The best way to get that experience is to build things you
+              actually use. Make your own todo app. I know &mdash; everyone
+              builds that and thinks their version has the special sauce, but it
+              does give you something valuable: a direct feedback loop between
+              you as the builder and you as the user. You build a feature, live
+              with it for a bit, and then think,
+              <em>you know what would be really cool&hellip;</em> That&rsquo;s
+              iteration. That&rsquo;s what agile is actually supposed to be.
+            </p>
+            <p>
+              You also end up with software tailored to your own workflow, which
+              I can&rsquo;t stress the value of enough. See it through and you
+              will be more productive in your everyday and likely will find a
+              lot of motivation in the process.
+            </p>
+          </div>
+
+          <h2 class="text-white">The One Piece of Advice</h2>
+          <div class="terminal">
+            <p>
+              If I could go back and tell my earlier self one thing, it would be
+              this: build. Always be building. Prioritize it above all other
+              things.
+            </p>
+            <p>
+              Building gives you motivation. Finishing gives you something to
+              show. Identify a need you have &mdash; something real, something
+              yours &mdash; and build the thing that solves it. Then repeat.
+            </p>
+            <p>
+              It&rsquo;s all in the doing. Be an engineer. Be a problem-solver.
+            </p>
+          </div>
+        </article>
+      </main>
+    </div>
+  </body>
+</html>
