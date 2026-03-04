@@ -2,12 +2,6 @@ const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
 const ROUTES: Record<string, string> = {
   '/': 'src/index.html',
-  '/blog': 'src/blog.html',
-  '/projects': 'src/projects.html',
-  '/projects/bomberman-js': 'src/projects/bomberman-js.html',
-  '/projects/status-zero': 'src/projects/status-zero.html',
-  '/blog/pragmatic-architecture': 'src/blog/pragmatic-architecture.html',
-  '/blog/technical-debt': 'src/blog/technical-debt.html',
 };
 
 const MIME_TYPES: Record<string, string> = {
@@ -32,9 +26,10 @@ const server = Bun.serve({
   async fetch(req) {
     const pathname = new URL(req.url).pathname;
 
-    const htmlPath = ROUTES[pathname];
-    if (htmlPath) {
-      return new Response(Bun.file(htmlPath), {
+    const htmlPath = ROUTES[pathname] ?? `src${pathname}.html`;
+    const htmlFile = Bun.file(htmlPath);
+    if (await htmlFile.exists()) {
+      return new Response(htmlFile, {
         headers: { 'Content-Type': 'text/html' },
       });
     }
