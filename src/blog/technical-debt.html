@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+      Technical Debt Is Real Debt &mdash; Treat It That Way | l8a.dev
+    </title>
+    <meta
+      name="description"
+      content="On what technical debt actually is, the fake version that masquerades as it, and why discipline &mdash; not permission from management &mdash; is the real answer."
+    />
+    <meta name="author" content="Luke Geneva" />
+    <link rel="canonical" href="https://l8a.dev/blog/technical-debt" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:title"
+      content="Technical Debt Is Real Debt &mdash; Treat It That Way"
+    />
+    <meta
+      property="og:description"
+      content="On what technical debt actually is, the fake version that masquerades as it, and why discipline &mdash; not permission from management &mdash; is the real answer."
+    />
+    <meta property="og:url" content="https://l8a.dev/blog/technical-debt" />
+    <meta
+      property="og:image"
+      content="https://l8a.dev/img/technical-debt.webp"
+    />
+    <meta property="article:author" content="Luke Geneva" />
+    <meta property="article:published_time" content="2026-03-03" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Technical Debt Is Real Debt &mdash; Treat It That Way"
+    />
+    <meta
+      name="twitter:description"
+      content="On what technical debt actually is, the fake version that masquerades as it, and why discipline &mdash; not permission from management &mdash; is the real answer."
+    />
+    <meta
+      name="twitter:image"
+      content="https://l8a.dev/img/technical-debt.jpg"
+    />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Technical Debt Is Real Debt — Treat It That Way",
+        "description": "On what technical debt actually is, the fake version that masquerades as it, and why discipline — not permission from management — is the real answer.",
+        "author": {
+          "@type": "Person",
+          "name": "Luke Geneva",
+          "url": "https://l8a.dev"
+        },
+        "datePublished": "2026-03-03",
+        "url": "https://l8a.dev/blog/technical-debt",
+        "image": "https://l8a.dev/img/technical-debt.webp",
+        "publisher": {
+          "@type": "Person",
+          "name": "Luke Geneva",
+          "url": "https://l8a.dev"
+        }
+      }
+    </script>
+
+    <link rel="icon" type="image/png" href="../img/favicon.png" />
+    <link rel="stylesheet" href="../index.css" />
+    <link rel="stylesheet" href="../blog.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="banner">
+          <a href="/">
+            <img
+              class="avatar"
+              src="../img/avatar.webp"
+              width="125"
+              height="125"
+            />
+          </a>
+        </div>
+        <nav>
+          <a href="/">Home</a>
+          <a class="active" href="/blog">Blog</a>
+          <a href="/projects">Projects</a>
+        </nav>
+      </header>
+      <main>
+        <article>
+          <h1 class="text-white">
+            Technical Debt Is Real Debt &mdash; Treat It That Way
+          </h1>
+
+          <div class="terminal">
+            <p>
+              Technical debt is one of those terms that gets thrown around quite
+              a bit &mdash; so much so that it has become malleable and unclear.
+              Spend enough time in the industry and you&rsquo;ll hear it used as
+              a battle cry, a shield, and an excuse &mdash; sometimes all in the
+              same standup. Over the years, I&rsquo;ve developed a few opinions
+              on what it actually is, what it isn&rsquo;t, and how to keep it
+              from quietly destroying a codebase.
+            </p>
+          </div>
+
+          <img
+            class="screenshot"
+            src="/img/technical-debt.webp"
+            alt="Technical Debt Is Real Debt"
+            width="776"
+            height="400"
+          />
+
+          <h2 class="text-white">It Really Does Behave Like Debt</h2>
+          <div class="terminal">
+            <p>
+              The financial analogy holds up pretty well. You can drown in
+              technical debt. If you&rsquo;ve ever maxed out a credit card and
+              found yourself making minimum payments just to keep the lights on,
+              you know the feeling &mdash; that low-grade dread of a hole that
+              keeps getting deeper while you&rsquo;re just trying to stay
+              afloat.
+            </p>
+            <p>
+              Technical debt is generally created in the name of speed. You mock
+              an API that doesn&rsquo;t exist yet. You implement the happy path
+              and skip the edge cases for now. You ship a proof-of-concept to
+              learn something fast. These are all legitimate. They share a
+              common thread: there&rsquo;s a reason, it&rsquo;s understood, and
+              the shortcut is in service of a goal.
+            </p>
+            <p>
+              This is all well and good, but if you&rsquo;re just doing the bare
+              amount of work needed to keep the system running &mdash; if
+              you&rsquo;re just making minimum payments &mdash; you&rsquo;re one
+              small disaster away from bankruptcy. Debt has to be paid down
+              regularly &mdash; in chunks, faster than it accumulates. You
+              can&rsquo;t work out once a month and expect to be in shape. It
+              has to be a habit.
+            </p>
+          </div>
+
+          <h2 class="text-white">
+            There&rsquo;s a Fake Version, and It&rsquo;s a Trap
+          </h2>
+          <div class="terminal">
+            <p>
+              Here&rsquo;s where things get uncomfortable. There&rsquo;s another
+              kind of technical debt: the kind that gets the label applied after
+              the fact, retroactively, to cover up code that was just written
+              badly.
+            </p>
+            <p>
+              Spaghetti everywhere?
+              <em
+                >Oh, it&rsquo;s just technical debt. We&rsquo;ll pay that down
+                later.</em
+              >
+              You won&rsquo;t. And you probably knew that when you said it.
+            </p>
+            <p>
+              The distinction usually comes down to readability. Legitimate debt
+              &mdash; the intentional kind &mdash; can still be clean and easy
+              to understand. It&rsquo;s incomplete by design, not
+              incomprehensible by neglect. When reviewing code or inheriting a
+              codebase, that&rsquo;s a good thing to look for. Messy by nature,
+              or messy because someone didn&rsquo;t want to deal with the pain
+              of doing it right? If it&rsquo;s the latter, calling it technical
+              debt is just putting a respectable name on something that
+              isn&rsquo;t.
+            </p>
+          </div>
+
+          <h2 class="text-white">Deciding When to Take It On</h2>
+          <div class="terminal">
+            <p>
+              A question to ask: does this move the ball in a meaningful way?
+            </p>
+            <p>
+              You may not be throwing the bomb downfield, but is it at least a
+              checkdown in the flat? Does it gain yardage? The debt you take on
+              should be something you can build on. If you can see that the next
+              step is going to require undoing what you just did, that&rsquo;s
+              probably not the right trade. Three-yard gains followed by
+              ten-yard sacks don&rsquo;t win the division.
+            </p>
+            <p>
+              The proof-of-concept is a special case. Those projects are often
+              designed to be thrown away, and that&rsquo;s fine &mdash; throwing
+              them away isn&rsquo;t moving backwards if they did their job. The
+              goal was to learn something, and if you learned it, the POC
+              succeeded regardless of whether the code survives.
+            </p>
+          </div>
+
+          <h2 class="text-white">Stop Asking Permission to Do Your Job</h2>
+          <div class="terminal">
+            <p>
+              Here&rsquo;s the take that tends to get some pushback: I
+              don&rsquo;t think debt repayment should be a line item you
+              negotiate with management.
+            </p>
+            <p>
+              The whole framing of &ldquo;making the case for refactoring to
+              stakeholders&rdquo; assumes that paying down technical debt is
+              optional work that competes with real work. It isn&rsquo;t.
+              It&rsquo;s part of doing the job properly. When you ship a
+              package, you don&rsquo;t negotiate with the carrier about how many
+              stops the truck makes. Those logistics are part of the shipping
+              process &mdash; they just happen. Technical debt repayment should
+              work the same way.
+            </p>
+            <p>
+              This is largely a developer-created problem. We&rsquo;ve spent so
+              long feeling the need to justify our time in terms of feature
+              points and deliverables that we&rsquo;ve trained everyone around
+              us to think that code health is a special project rather than a
+              basic professional responsibility. And honestly? I think part of
+              it is that we can&rsquo;t stop explaining ourselves. Cataloguing
+              every step we took, every tradeoff we made &mdash; it can become a
+              habit of looking busy rather than providing real value.
+            </p>
+            <p>
+              Management knowing that technical debt exists is often a symptom
+              of that habit. If we&rsquo;re doing our job well, they
+              shouldn&rsquo;t need to know.
+            </p>
+          </div>
+
+          <h2 class="text-white">The Real Answer Is Discipline</h2>
+          <div class="terminal">
+            <p>
+              The most valuable habit for keeping debt under control is the one
+              that&rsquo;s hardest to develop: discipline. Such is the case with
+              many things in life.
+            </p>
+            <p>
+              Think before you type. Be intentional about what you&rsquo;re
+              doing and why. Make the good decisions upfront when they&rsquo;re
+              cheap, rather than later when they&rsquo;re expensive. And take
+              your medicine &mdash; pay down debt regularly, before it eats you.
+            </p>
+            <p>
+              It&rsquo;s a simple answer. It&rsquo;s not an easy one. But
+              it&rsquo;s the real one.
+            </p>
+          </div>
+        </article>
+      </main>
+    </div>
+  </body>
+</html>
