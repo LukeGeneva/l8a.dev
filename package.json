@@ -1,7 +1,8 @@
 {
   "name": "l8a.dev",
   "scripts": {
-    "start": "bun src/index.ts"
+    "start": "bun src/index.ts",
+    "webp": "f() { cwebp \"$1\" -q 50 -o \"${1%.*}.webp\" && magick \"$1\" -quality 85 \"${1%.*}.jpg\"; }; f"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
