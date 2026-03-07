@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>The Only Testing Metric That Matters: Confidence | l8a.dev</title>
+    <meta
+      name="description"
+      content="Coverage targets, test taxonomy, mocking for its own sake &mdash; most testing advice misses the point. The only metric that matters is whether the suite makes you more confident in the system."
+    />
+    <meta name="author" content="Luke Geneva" />
+    <link rel="canonical" href="https://l8a.dev/blog/testing" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:title"
+      content="The Only Testing Metric That Matters: Confidence"
+    />
+    <meta
+      property="og:description"
+      content="Coverage targets, test taxonomy, mocking for its own sake &mdash; most testing advice misses the point. The only metric that matters is whether the suite makes you more confident in the system."
+    />
+    <meta property="og:url" content="https://l8a.dev/blog/testing" />
+    <meta property="og:image" content="https://l8a.dev/img/testing.webp" />
+    <meta property="article:author" content="Luke Geneva" />
+    <meta property="article:published_time" content="2026-03-07" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="The Only Testing Metric That Matters: Confidence"
+    />
+    <meta
+      name="twitter:description"
+      content="Coverage targets, test taxonomy, mocking for its own sake &mdash; most testing advice misses the point. The only metric that matters is whether the suite makes you more confident in the system."
+    />
+    <meta name="twitter:image" content="https://l8a.dev/img/testing.jpg" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "The Only Testing Metric That Matters: Confidence",
+        "description": "Coverage targets, test taxonomy, mocking for its own sake — most testing advice misses the point. The only metric that matters is whether the suite makes you more confident in the system.",
+        "author": {
+          "@type": "Person",
+          "name": "Luke Geneva",
+          "url": "https://l8a.dev"
+        },
+        "datePublished": "2026-03-07",
+        "url": "https://l8a.dev/blog/testing",
+        "image": "https://l8a.dev/img/testing.webp",
+        "publisher": {
+          "@type": "Person",
+          "name": "Luke Geneva",
+          "url": "https://l8a.dev"
+        }
+      }
+    </script>
+
+    <link rel="icon" type="image/png" href="../img/favicon.png" />
+    <link rel="stylesheet" href="../index.css" />
+    <link rel="stylesheet" href="../blog.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="banner">
+          <a href="/">
+            <img
+              class="avatar"
+              src="../img/avatar.webp"
+              width="125"
+              height="125"
+            />
+          </a>
+        </div>
+        <nav>
+          <a href="/">Home</a>
+          <a class="active" href="/blog">Blog</a>
+          <a href="/projects">Projects</a>
+        </nav>
+      </header>
+      <main>
+        <article>
+          <h1 class="text-white">
+            The Only Testing Metric That Matters: Confidence
+          </h1>
+
+          <div class="terminal">
+            <p>
+              The topic of testing in software has always generated a lot of
+              buzz. Some engineers swear by 100% coverage. Others treat every
+              test as a maintenance liability. Most teams land somewhere in the
+              middle, guided more by convention than by any coherent principle.
+            </p>
+            <p>
+              I try to take a very simple view on this. A good test does exactly
+              one thing &mdash; it increases your confidence in the system.
+              That&rsquo;s it. That&rsquo;s the whole metric.
+            </p>
+          </div>
+
+          <img
+            class="screenshot"
+            src="/img/testing.webp"
+            alt="The Only Testing Metric That Matters: Confidence"
+            width="776"
+            height="400"
+          />
+
+          <h2 class="text-white">Classification Is a Distraction</h2>
+          <div class="terminal">
+            <p>
+              The endless categorization of tests &mdash; unit, integration,
+              end-to-end, contract, smoke &mdash; is mostly noise when it comes
+              to deciding what to write. When I&rsquo;m working on a complex
+              function and I&rsquo;m not quite sure it behaves the way I think,
+              I write a test. Maybe that test happens to be a unit test, but the
+              type wasn&rsquo;t the decision. The uncertainty was. The
+              classification is just a label that falls out of what I needed to
+              verify.
+            </p>
+            <p>
+              Methodologies that put coverage targets and test taxonomy at the
+              center tend to produce suites that look impressive and feel
+              hollow. Full coverage that still has you crossing your fingers at
+              deployment time isn&rsquo;t useful. A green CI badge that
+              doesn&rsquo;t move the needle on your actual confidence in the
+              system is also not useful.
+            </p>
+            <p>
+              The question I come back to is simple: when the suite goes green,
+              do I feel better about shipping? If the answer is yes, the tests
+              are doing their job. If the answer is no, something is wrong
+              &mdash; regardless of what the coverage report says.
+            </p>
+          </div>
+
+          <h2 class="text-white">Don&rsquo;t Dismiss the Simple Test</h2>
+          <div class="terminal">
+            <p>
+              &ldquo;Test the places that make you uneasy&rdquo; is personal
+              advice, but I think it works in both directions. A senior engineer
+              who&rsquo;s lived with a system for years might have blind spots
+              baked in &mdash; places where familiarity has quietly replaced
+              vigilance. A junior engineer or newcomer might be looking at a
+              real gap that everyone else stopped seeing.
+            </p>
+            <p>
+              Be careful about labeling a test &ldquo;overly cautious.&rdquo;
+              What looks like an obvious or trivial assertion may be encoding a
+              key assumption about how the system behaves. Consider something
+              like this:
+            </p>
+            <pre>
+it('does not apply discount to free items', () => {
+  const result = applyDiscount({ price: 0, discountPercent: 10 });
+  expect(result.price).toBe(0);
+});</pre
+            >
+            <p>
+              It looks obvious, and it is &mdash; in its current state at least.
+              But this test encodes a business rule. The moment someone
+              refactors the discount logic and accidentally breaks it, this is
+              the thing that catches it. These simple, seemingly obvious tests
+              are often the best protection against regression &mdash; and
+              they&rsquo;re exactly the kind that get skipped when experience
+              tips into overconfidence.
+            </p>
+            <p>
+              That said, tests can also drift into pedantry. There&rsquo;s a
+              meaningful difference between testing behavior and testing
+              incidental details. A good example: do you need to assert the
+              exact wording of an error message? For most systems, no. The
+              important thing is that the error is thrown. Asserting the
+              specific string makes the test brittle &mdash; it will break any
+              time someone tweaks the message for clarity, even if nothing about
+              the underlying behavior changed. If the message text is genuinely
+              business-critical, that&rsquo;s a different conversation. But if
+              it isn&rsquo;t, the assertion is noise.
+            </p>
+          </div>
+
+          <h2 class="text-white">The Most Wasteful Test in the Wild</h2>
+          <div class="terminal">
+            <p>
+              There&rsquo;s one specific pattern I&rsquo;ve seen repeatedly that
+              I&rsquo;d nominate as the most common form of wasted testing
+              effort: mocking a dependency and then testing the mock.
+            </p>
+            <p>It looks like this:</p>
+            <pre>
+async function getUser(id: string): Promise&lt;User&gt; {
+  return await apiClient.get(`/users/${id}`);
+}
+
+it('calls the API and returns a user', async () => {
+  const mockUser = { id: '1', name: 'Alice' };
+  jest.spyOn(apiClient, 'get').mockResolvedValue(mockUser);
+
+  const result = await getUser('1');
+
+  expect(apiClient.get).toHaveBeenCalledWith('/users/1');
+  expect(result).toEqual(mockUser);
+});</pre
+            >
+            <p>
+              This test doesn&rsquo;t verify any real behavior. It confirms that
+              the mock returns what you told it to return. That&rsquo;s not a
+              test &mdash; it&rsquo;s a script that reassures you the mocking
+              library works. It adds nothing to your confidence, and it adds a
+              lot to your maintenance burden. These tests are brittle. The
+              frustration they generate is real and the value they provide is
+              not.
+            </p>
+            <p>
+              Delete these tests. If a test doesn&rsquo;t increase your
+              confidence in the system, it is taking up space and manufacturing
+              cognitive dissonance. Deleting it is not heresy &mdash; it&rsquo;s
+              honesty.
+            </p>
+          </div>
+
+          <h2 class="text-white">The Most Valuable Tests You Can Write</h2>
+          <div class="terminal">
+            <p>
+              Counterintuitively, some of the most valuable tests you&rsquo;ll
+              ever write are the ones you write after something breaks
+              unexpectedly.
+            </p>
+            <p>
+              When you hit an error you didn&rsquo;t anticipate &mdash;
+              something you didn&rsquo;t fully think through, or simply
+              didn&rsquo;t know you didn&rsquo;t know &mdash; that&rsquo;s a
+              test waiting to be written. Capture the failure as a failing test
+              first. Then fix it by making the test pass. This approach does
+              three things simultaneously: it resolves the bug, protects you
+              from ever being surprised by that same failure again, and most
+              importantly elevates your confidence in the system.
+            </p>
+            <p>
+              Regression prevention is among a test&rsquo;s most important
+              duties. Tests written in response to real, unexpected failures
+              tend to be grounded in actual system behavior rather than
+              assumptions about it. They earn their place.
+            </p>
+          </div>
+
+          <h2 class="text-white">A Simple Principle for a Trustworthy Suite</h2>
+          <div class="terminal">
+            <p>
+              If I&rsquo;m starting fresh, the guide is always the same: test
+              what you&rsquo;re unsure of, and test what has surprised you. Skip
+              the ceremony. Skip the coverage games. Ask, honestly, whether the
+              suite makes you more confident &mdash; and if the answer for any
+              given test is no, let it go.
+            </p>
+            <p>
+              Use tests to make you and your team more confident. That&rsquo;s
+              what they&rsquo;re for.
+            </p>
+          </div>
+        </article>
+      </main>
+    </div>
+  </body>
+</html>
