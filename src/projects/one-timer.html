@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>One-Timer | l8a.dev</title>
+    <meta
+      name="description"
+      content="A web application for securely sharing sensitive information through self-destructing one-time links, built with Bun, React, and AES-256-CBC encryption."
+    />
+    <meta name="author" content="Luke Geneva" />
+    <link rel="canonical" href="https://l8a.dev/projects/one-timer" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="One-Timer" />
+    <meta
+      property="og:description"
+      content="A web application for securely sharing sensitive information through self-destructing one-time links, built with Bun, React, and AES-256-CBC encryption."
+    />
+    <meta property="og:url" content="https://l8a.dev/projects/one-timer" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="One-Timer" />
+    <meta
+      name="twitter:description"
+      content="A web application for securely sharing sensitive information through self-destructing one-time links, built with Bun, React, and AES-256-CBC encryption."
+    />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "One-Timer",
+        "description": "A web application for securely sharing sensitive information through self-destructing one-time links, built with Bun, React, and AES-256-CBC encryption.",
+        "author": {
+          "@type": "Person",
+          "name": "Luke Geneva",
+          "url": "https://l8a.dev"
+        },
+        "url": "https://l8a.dev/projects/one-timer",
+        "applicationCategory": "SecurityApplication"
+      }
+    </script>
+
+    <link rel="icon" type="image/png" href="../img/favicon.png" />
+    <link rel="stylesheet" href="../index.css" />
+    <link rel="stylesheet" href="../projects.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="banner">
+          <a href="/">
+            <img
+              class="avatar"
+              src="../img/avatar.webp"
+              width="125"
+              height="125"
+            />
+          </a>
+        </div>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/blog">Blog</a>
+          <a class="active" href="/projects">Projects</a>
+        </nav>
+      </header>
+      <main>
+        <section>
+          <h1 class="text-white">One-Timer</h1>
+          <div class="terminal">
+            <p>
+              A web application for securely sharing sensitive
+              information&mdash;API keys, passwords, confidential
+              messages&mdash;through self-destructing one-time links. The sender
+              pastes a secret into the UI, receives a shareable link, and once
+              the recipient opens it the secret is permanently deleted from the
+              server. It also expires automatically after 24 hours if never
+              viewed.
+            </p>
+            <p>
+              The source is not public, but the concepts behind it are
+              straightforward enough to walk through.
+            </p>
+            <p>
+              Live:
+              <a href="https://onetimer.l8a.dev" target="_blank"
+                >onetimer.l8a.dev</a
+              >
+            </p>
+          </div>
+
+          <img
+            class="screenshot"
+            src="/img/one-timer.webp"
+            alt="One-Timer"
+            width="776"
+            height="400"
+          />
+
+          <h2 class="text-white">Stack</h2>
+          <div class="terminal">
+            <ul>
+              <li>
+                Bun &mdash; runtime, server, bundler, and test runner; replaces
+                Node.js, Express, and a separate build tool in one binary
+              </li>
+              <li>
+                SQLite (via Bun's built-in driver) &mdash; persistent storage
+                for encrypted secrets, running in WAL mode for write concurrency
+              </li>
+              <li>
+                AES-256-CBC (Node.js Crypto API) &mdash; symmetric encryption
+                for secrets at rest
+              </li>
+              <li>React 19 &mdash; UI</li>
+              <li>React Router 7 &mdash; client-side routing</li>
+              <li>Tailwind CSS 4 &mdash; styling</li>
+              <li>TypeScript &mdash; type safety throughout</li>
+              <li>PM2 &mdash; process management on a VPS</li>
+            </ul>
+          </div>
+
+          <h2 class="text-white">Architecture</h2>
+          <div class="terminal">
+            <p><strong>Encryption Model</strong></p>
+            <p>
+              The central design decision is that the server never holds the
+              encryption key. When a secret is submitted, the server generates a
+              random 256-bit key and a random initialization vector, encrypts
+              the secret with AES-256-CBC, stores only the ciphertext and
+              initialization vector, and returns the key to the browser. The
+              browser then constructs the shareable URL with the key embedded in
+              the query string. The server has no way to decrypt what it
+              stored&mdash;only someone with the full link can.
+            </p>
+
+            <p><strong>One-Time Retrieval</strong></p>
+            <p>
+              When a recipient opens the link, the browser extracts the secret
+              ID and key from the URL and sends both to the server. The server
+              looks up the ciphertext, decrypts it using the supplied key,
+              deletes the record from the database, and returns the plaintext.
+              The deletion happens in the same operation as the read, so the
+              secret cannot be retrieved a second time regardless of what the
+              client does next.
+            </p>
+
+            <p><strong>Expiration</strong></p>
+            <p>
+              Each secret is stored with an expiration timestamp set 24 hours in
+              the future. Retrieval checks the timestamp before decrypting; if
+              the deadline has passed the record is treated as if it does not
+              exist. This puts a firm upper bound on how long unviewed secrets
+              linger on the server.
+            </p>
+
+            <p><strong>Frontend Flow</strong></p>
+            <p>
+              The app has two views. The home view handles secret creation: the
+              user types a secret, submits the form, and the resulting link is
+              displayed with a copy button. The reveal view handles retrieval:
+              the recipient lands on the URL, sees a prompt to confirm they want
+              to view the secret, and clicks through to trigger the API call.
+              Gating the retrieval behind a deliberate action prevents prefetch
+              bots and link previews from consuming the secret before the
+              intended recipient sees it.
+            </p>
+
+            <p><strong>Server &amp; Build</strong></p>
+            <p>
+              Bun serves both the API routes and the static frontend from a
+              single process. The frontend is bundled at startup using Bun's
+              built-in bundler with a Tailwind plugin, so there is no separate
+              build step &mdash; the server handles it.
+            </p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
