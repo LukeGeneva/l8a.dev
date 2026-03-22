@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Farkle | l8a.dev</title>
+    <meta
+      name="description"
+      content="A real-time multiplayer implementation of the dice game Farkle, built with Bun and WebSockets. Players join a shared room, take turns rolling, and race to 10,000 points."
+    />
+    <meta name="author" content="Luke Geneva" />
+    <link rel="canonical" href="https://l8a.dev/projects/farkle" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Farkle" />
+    <meta
+      property="og:description"
+      content="A real-time multiplayer implementation of the dice game Farkle, built with Bun and WebSockets. Players join a shared room, take turns rolling, and race to 10,000 points."
+    />
+    <meta property="og:url" content="https://l8a.dev/projects/farkle" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Farkle" />
+    <meta
+      name="twitter:description"
+      content="A real-time multiplayer implementation of the dice game Farkle, built with Bun and WebSockets. Players join a shared room, take turns rolling, and race to 10,000 points."
+    />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Farkle",
+        "description": "A real-time multiplayer implementation of the dice game Farkle, built with Bun and WebSockets. Players join a shared room, take turns rolling, and race to 10,000 points.",
+        "author": {
+          "@type": "Person",
+          "name": "Luke Geneva",
+          "url": "https://l8a.dev"
+        },
+        "url": "https://l8a.dev/projects/farkle",
+        "applicationCategory": "GameApplication"
+      }
+    </script>
+
+    <link rel="icon" type="image/png" href="../img/favicon.png" />
+    <link rel="stylesheet" href="../index.css" />
+    <link rel="stylesheet" href="../projects.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="banner">
+          <a href="/">
+            <img
+              class="avatar"
+              src="../img/avatar.webp"
+              width="125"
+              height="125"
+            />
+          </a>
+        </div>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/blog">Blog</a>
+          <a class="active" href="/projects">Projects</a>
+        </nav>
+      </header>
+      <main>
+        <section>
+          <h1 class="text-white">Farkle</h1>
+          <div class="terminal">
+            <p>
+              A real-time multiplayer implementation of the dice game Farkle.
+              Players create or join a room via a shareable link, then take
+              turns rolling six dice and selecting scoring combinations. On each
+              turn you can keep rolling your remaining dice to press your luck,
+              or bank your accumulated points to lock them in. Roll no scoring
+              dice and you farkle &mdash; losing everything you built up that
+              turn. First player to 10,000 points triggers a final round so
+              every other player gets one last chance.
+            </p>
+            <p>
+              Live:
+              <a href="https://farkle.l8a.dev" target="_blank"
+                >farkle.l8a.dev</a
+              >
+            </p>
+          </div>
+
+          <img
+            class="screenshot"
+            src="/img/farkle.webp"
+            alt="Farkle"
+            width="776"
+            height="400"
+          />
+
+          <h2 class="text-white">Stack</h2>
+          <div class="terminal">
+            <ul>
+              <li>
+                Bun &mdash; runtime, server, bundler, and test runner; handles
+                everything from WebSocket connections to building the frontend
+                in a single binary
+              </li>
+              <li>
+                WebSockets (via Bun's built-in server) &mdash; real-time
+                communication between all players in a room; no polling, no
+                external library
+              </li>
+              <li>React 19 &mdash; UI</li>
+              <li>TypeScript &mdash; type safety throughout</li>
+              <li>Tailwind CSS 4 &mdash; styling</li>
+            </ul>
+          </div>
+
+          <h2 class="text-white">Architecture</h2>
+          <div class="terminal">
+            <p><strong>In-Memory Game State</strong></p>
+            <p>
+              There is no database. All room and game state lives in server
+              memory for the duration of a session. This keeps the stack small
+              and the latency low &mdash; a turn update is a WebSocket
+              broadcast, not a round-trip to a database. The tradeoff is that a
+              server restart clears all active rooms, which is an acceptable
+              cost for a casual game with sessions measured in minutes. This may
+              be the target of a future update.
+            </p>
+
+            <p><strong>WebSocket Communication</strong></p>
+            <p>
+              Each room is a WebSocket subscription group. When a player takes
+              an action &mdash; rolling, selecting dice, banking &mdash; the
+              server updates the authoritative room state and broadcasts the new
+              state to every connected client in that room. Clients are purely
+              reactive: they render whatever state the server sends and emit
+              events when the player acts. There is no client-side game logic
+              that diverges from the server.
+            </p>
+
+            <p><strong>Shared Scoring Logic</strong></p>
+            <p>
+              Scoring rules are defined once and used in two places: the server
+              validates every move against them before accepting it, and the
+              client uses the same logic to highlight which dice selections are
+              legal before the player even submits. Keeping both sides in sync
+              this way means the UI can give instant feedback without trusting
+              the client to enforce rules &mdash; the server is always the
+              authority.
+            </p>
+
+            <p><strong>Session Persistence</strong></p>
+            <p>
+              Player identity is stored in
+              <span class="inline-code">localStorage</span> so that a page
+              refresh or accidental close does not drop someone from the game.
+              When a client reconnects it presents its stored session ID and the
+              server reattaches it to the correct room and player slot. This
+              avoids the need for accounts or any server-side session store.
+            </p>
+
+            <p><strong>Endgame Flow</strong></p>
+            <p>
+              Reaching 10,000 points does not immediately end the game. The
+              server transitions the room into a final-round state and works
+              through the remaining players in turn order, giving each one last
+              chance to beat the leader's score. Only after all remaining
+              players have had their turn does the server resolve the winner and
+              broadcast the final standings.
+            </p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
